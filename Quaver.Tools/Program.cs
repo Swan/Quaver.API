@@ -6,6 +6,10 @@
 */
 
 using System;
+using System.Linq;
+using Quaver.API.Enums;
+using Quaver.API.Maps;
+using Quaver.API.Maps.Processors.Patterns;
 using Quaver.Tools.Commands;
 
 namespace Quaver.Tools
@@ -63,6 +67,13 @@ namespace Quaver.Tools
                     break;
                 case "-recalculate":
                     new RecalculateCommand(args).Execute();
+                    break;
+                case "-analyzepatterns":
+                    var argsList = args.ToList();
+                    argsList.RemoveAt(0);
+
+                    var map = Qua.Parse(string.Join(" ", argsList));
+                    var analyzer = new PatternAnalyzer(map, ModIdentifier.None);
                     break;
                 default:
                     throw new ArgumentException();
